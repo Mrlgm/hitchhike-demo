@@ -16,7 +16,7 @@
         name: 'app',
         components: {
             Header,
-            Footer
+            Footer,
         },
         mounted() {
 
