@@ -1,8 +1,8 @@
 <template>
     <div>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="名称" prop="name">
-            <el-input v-model="ruleForm.name"></el-input>
+        <el-form-item label="名称" prop="title">
+            <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="phone">
             <el-input v-model="ruleForm.phone"></el-input>
@@ -45,7 +45,7 @@
         data() {
             return {
                 ruleForm: {
-                    name: '',
+                    title: '',
                     phone:'',
                     Identity: '',
                     date1: '',
@@ -53,9 +53,9 @@
                     desc: ''
                 },
                 rules: {
-                    name: [
+                    title: [
                         {required: true, message: '请输入出行地点', trigger: 'blur'},
-                        {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
+                        {min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur'}
                     ],
                     phone: [
                         {required: true, message: '请输入电话号码', trigger: 'blur'},
@@ -80,6 +80,30 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        let Blogs = this.$AV.Object.extend('Blogs');
+                        let blogs = new Blogs();
+                        let currentUser = this.$AV.User.current();
+                        blogs.save({
+                            title: this.ruleForm.title,
+                            phone:this.ruleForm.phone,
+                            Identity: this.ruleForm.Identity,
+                            date1: this.ruleForm.date1,
+                            date2: this.ruleForm.date2,
+                            desc: this.ruleForm.desc,
+                            user:currentUser,
+                            userId:currentUser.toJSON().objectId,
+                        }).then(()=>{
+                            this.$notify({
+                                title:'成功',
+                                message:'发帖成功 ヾ(๑╹◡╹)ﾉ"',
+                                type:'success',
+                                offset: 100
+                            });
+                            this.$router.push({
+                                name:'Index',
+                                page:1
+                            });
+                        })
                     } else {
                         return false;
                     }

@@ -1,15 +1,17 @@
 <template>
     <div class="index">
-        <section>
+        <section v-for="blog in blogList">
             <figure>
-                <img src="../assets/user_imgs/1.png" title="" alt="头像" width="60" height="60">
-                <figcaption>我叫啥</figcaption>
+                <img :src="blog.attributes.user.attributes.avatar" title="" alt="头像" width="60" height="60">
+                <figcaption>{{blog.attributes.user.attributes.username}}</figcaption>
             </figure>
             <div class="desc">
-                <h2> 一起去西藏呀
-                    <span class="time">什么时候去呀</span>
-                </h2>
-                <p>起止地点</p>
+                <div class="title">
+                    <h2> {{blog.attributes.title}} </h2>
+                    <span class="identity">{{blog.attributes.Identity | formatIdentity}}</span>
+                    <span class="time">{{blog.attributes.date1 | getTime}}去</span>
+                </div>
+                <p>{{blog.attributes.desc}}</p>
             </div>
         </section>
     </div>
@@ -17,7 +19,45 @@
 
 <script>
     export default {
-        name: "index"
+        name: "index",
+        data() {
+            return {
+                blogList: [],
+                total: 0
+            }
+        },
+        created() {
+
+        },
+        mounted() {
+            this.getBlog();
+            console.log(this.blogList)
+        },
+        methods: {
+            getBlog(page) {
+                //this.page = page;
+                let list = []
+                let query = new this.$AV.Query('Blogs');
+                query.include('user');
+                query.descending('createdAt');//从最新的开始返回
+                query.find().then((blogs) => {
+                    blogs.forEach((blog, index) => {
+                        list.push({...blog});
+                    });
+                })
+                this.blogList = list
+            },
+            getDriver(){
+                let query = new this.$AV.Query('Blogs');
+                query.include('user');
+                query.descending('createdAt');//从最新的开始返回
+                query.find().then((blogs) => {
+                    blogs.forEach((blog, index) => {
+                        this.blogList.push({...blog});
+                    });
+                })
+            }
+        }
     }
 </script>
 
@@ -30,6 +70,7 @@
             padding: 10px;
             margin: 10px;
             width: 600px;
+            transition: all 1s;
             figure {
                 img {
                     margin: 10px;
@@ -39,14 +80,37 @@
                 }
             }
             .desc {
-                .time {
-                    font-size: 12px;
-                    color: #999999;
+                .title {
+                    display: flex;
+                    h2{
+                        display: flex;
+                        align-items: center;
+                    }
+                    .identity {
+                        font-size: 13px;
+                        display: flex;
+                        align-items: center;
+                        padding: 5px;
+                        margin: 5px;
+                        background-color: #288052;
+                        color: #fff;
+                        border-radius: 4px;
+                    }
+                    .time {
+                        font-size: 12px;
+                        color: #999999;
+                        display: flex;
+                        align-items: center;
+                    }
                 }
-                p{
+
+                p {
                     margin-top: 30px;
                     padding-left: 10px;
                 }
+            }
+            &:hover {
+                box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.75);
             }
         }
         height: 100%;

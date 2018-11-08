@@ -48,5 +48,6 @@
         align-items: center;
         height: 100%;
         background-color: #EEEEEE;
+        overflow: auto;
     }
 </style>
