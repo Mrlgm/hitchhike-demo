@@ -2,7 +2,7 @@
     <div id="app">
         <Header></Header>
         <div class="wrapper">
-wode tian
+            <router-view></router-view>
         </div>
         <Footer></Footer>
     </div>
@@ -25,10 +25,12 @@ wode tian
 </script>
 
 <style>
-    * {
+    *, *::before, *::after {
+        box-sizing: border-box;
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
+    }
+    html,body{
         height: 100%;
     }
 
@@ -36,9 +38,14 @@ wode tian
         display: flex;
         flex-direction: column;
         min-width: 800px;
+        height: 100%;
     }
 
     .wrapper {
         flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
     }
 </style>
