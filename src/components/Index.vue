@@ -31,7 +31,6 @@
         },
         mounted() {
             this.getBlog();
-            console.log(this.blogList)
         },
         methods: {
             getBlog(page) {
