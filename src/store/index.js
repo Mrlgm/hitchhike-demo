@@ -7,10 +7,10 @@ Vue.use(Vuex);
 
 import auth from './modules/auth.js';
 import blog from './modules/blog.js';
-//
-// export default new Vuex.Store({
-//     modules: {
-//         auth,
-//         blog
-//     }
-// })
+
+export default new Vuex.Store({
+    modules: {
+        auth,
+        blog
+    }
+})

@@ -21,28 +21,25 @@
 </template>
 
 <script>
+    import {mapActions} from 'vuex';
+    const reg = /^\d+/;
     export default {
         name: "Register",
         data() {
-            var checkAge = (rule, value, callback) => {
+            var checkName = (rule, value, callback) => {
                 if (!value) {
-                    return callback(new Error('年龄不能为空'));
+                    return callback(new Error('用户名不能为空'));
+                } else if (reg.test(value)) {
+                    return callback(new Error('用户名不能以数字开头'));
+                } else {
+                    callback();
                 }
-                setTimeout(() => {
-                    if (!Number.isInteger(value)) {
-                        callback(new Error('请输入数字值'));
-                    } else {
-                        if (value < 18) {
-                            callback(new Error('必须年满18岁'));
-                        } else {
-                            callback();
-                        }
-                    }
-                }, 1000);
             };
             var validatePass = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请输入密码'));
+                } else if (value.length < 6 || value.length > 16) {
+                    callback(new Error('密码长度6~16个字符'));
                 } else {
                     if (this.ruleForm2.checkPass !== '') {
                         this.$refs.ruleForm2.validateField('checkPass');
@@ -60,31 +57,43 @@
                 }
             };
             return {
+                message: '',
                 ruleForm2: {
+                    name: '',
                     pass: '',
-                    checkPass: '',
-                    age: ''
+                    checkPass: ''
                 },
                 rules2: {
+                    name: [
+                        {validator: checkName, trigger: 'blur'}
+                    ],
                     pass: [
                         {validator: validatePass, trigger: 'blur'}
                     ],
                     checkPass: [
                         {validator: validatePass2, trigger: 'blur'}
-                    ],
-                    age: [
-                        {validator: checkAge, trigger: 'blur'}
                     ]
                 }
             };
         },
         methods: {
+            ...mapActions(['register']),
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert('submit!');
+                        this.register({username: this.ruleForm2.name, password: this.ruleForm2.pass})
+                            .then(res => {
+                                this.$notify({
+                                    type: 'success',
+                                    title: '成功',
+                                    message: '登录成功 ٩(๑❛ᴗ❛๑)۶',
+                                    offset: 100
+                                });
+                                this.$router.push('/');
+                            }, err => {
+                                this.$message.error('该用户名已被注册');
+                            });
                     } else {
-                        console.log('error submit!!');
                         return false;
                     }
                 });
@@ -97,7 +106,7 @@
 </script>
 
 <style scoped>
-.register{
-    min-width: 500px;
-}
+    .register {
+        min-width: 500px;
+    }
 </style>

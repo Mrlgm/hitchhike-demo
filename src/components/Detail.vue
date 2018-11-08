@@ -18,7 +18,7 @@
                         width="180">
                 </el-table-column>
                 <el-table-column
-                        prop="name"
+                        prop="phone"
                         label="电话"
                         width="180">
                 </el-table-column>
@@ -38,7 +38,7 @@
             return {
                 tableData: [{
                     date: '2016-05-02',
-                    name: '王小虎',
+                    phone: '18888888888',
                     address: '上海市普陀区金沙江路 1518 弄'
                 }]
             }
