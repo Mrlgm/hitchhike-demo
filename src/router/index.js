@@ -41,7 +41,7 @@ const router = new Router({
             component: Create
         },
         {
-            path: '/edit:blogId',
+            path: '/edit',
             name: 'Edit',
             component: Edit,
             meta: {
@@ -49,7 +49,7 @@ const router = new Router({
             }
         },
         {
-            path: '/detail/:blogId',
+            path: '/detail',
             name: 'Detail',
             component: Detail
         },
@@ -62,7 +62,7 @@ const router = new Router({
             }
         },
         {
-            path: '/user/:userId',
+            path: '/user',
             name: 'user',
             component: User
         },
