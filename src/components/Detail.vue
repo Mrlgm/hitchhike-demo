@@ -7,7 +7,7 @@
                 <p><span>{{user.username}}</span>发表于{{blog.createdAt | formatDate}}</p>
             </div>
         </div>
-        <div>
+        <div class="table">
             <el-table
                     :data="tableData"
                     stripe
@@ -63,7 +63,7 @@
                     let data = res.toJSON();
                     console.log(data)
                     this.blog = data;
-                    this.tableData[0].date = this.getTime(data.date2)
+                    this.tableData[0].date = this.getDay(data.date1) + this.getTime(data.date2)
                     this.tableData[0].phone = data.phone
                     this.tableData[0].address = data.desc
                     this.user = data.user;
@@ -72,12 +72,19 @@
             getTime(time) {
                 let date = new Date(time)
                 let year = date.getFullYear();  // 获取完整的年份(4位,1970)
-                let month = date.getMonth()+1;  // 获取月份(0-11,0代表1月,用的时候记得加上1)
+                let month = date.getMonth() + 1;  // 获取月份(0-11,0代表1月,用的时候记得加上1)
                 let day = date.getDate();  // 获取日(1-31)
 
                 let hour = date.getHours();  // 获取小时数(0-23)
                 let min = date.getMinutes();
-                return year + '-' + month + '-' + day + ' ' + hour + ':' + min
+                return ' ' + hour + ':' + min
+            },
+            getDay(time) {
+                let date = new Date(time)
+                let year = date.getFullYear();  // 获取完整的年份(4位,1970)
+                let month = date.getMonth() + 1;  // 获取月份(0-11,0代表1月,用的时候记得加上1)
+                let day = date.getDate();  // 获取日(1-31)
+                return year + '-' + month + '-' + day
             }
         }
 
@@ -100,6 +107,10 @@
                 flex-direction: column;
                 justify-content: center;
             }
+        }
+        .table{
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 4px;
         }
     }
 

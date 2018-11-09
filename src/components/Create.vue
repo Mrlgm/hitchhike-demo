@@ -1,41 +1,41 @@
 <template>
     <div>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="名称" prop="title">
-            <el-input v-model="ruleForm.title"></el-input>
-        </el-form-item>
-        <el-form-item label="电话" prop="phone">
-            <el-input v-model="ruleForm.phone"></el-input>
-        </el-form-item>
-        <el-form-item label="身份" prop="Identity">
-            <el-select v-model="ruleForm.Identity" placeholder="请选择身份">
-                <el-option label="乘客" value="passenger"></el-option>
-                <el-option label="司机" value="driver"></el-option>
-            </el-select>
-        </el-form-item>
-        <el-form-item label="出行时间" required>
-            <el-col :span="11">
-                <el-form-item prop="date1">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1"
-                                    style="width: 100%;"></el-date-picker>
-                </el-form-item>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-                <el-form-item prop="date2">
-                    <el-time-picker type="fixed-time" placeholder="选择时间" v-model="ruleForm.date2"
-                                    style="width: 100%;"></el-time-picker>
-                </el-form-item>
-            </el-col>
-        </el-form-item>
-        <el-form-item label="起止地点" prop="desc">
-            <el-input type="textarea" v-model="ruleForm.desc"></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
-    </el-form>
+            <el-form-item label="名称" prop="title">
+                <el-input v-model="ruleForm.title"></el-input>
+            </el-form-item>
+            <el-form-item label="电话" prop="phone">
+                <el-input v-model="ruleForm.phone"></el-input>
+            </el-form-item>
+            <el-form-item label="身份" prop="Identity">
+                <el-select v-model="ruleForm.Identity" placeholder="请选择身份">
+                    <el-option label="乘客" value="passenger"></el-option>
+                    <el-option label="司机" value="driver"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="出行时间" required>
+                <el-col :span="11">
+                    <el-form-item prop="date1">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1"
+                                        style="width: 100%;" :picker-options="pickerOptions"></el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <el-col class="line" :span="2">-</el-col>
+                <el-col :span="11">
+                    <el-form-item prop="date2">
+                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="ruleForm.date2"
+                                        style="width: 100%;"></el-time-picker>
+                    </el-form-item>
+                </el-col>
+            </el-form-item>
+            <el-form-item label="起止地点" prop="desc">
+                <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+                <el-button @click="resetForm('ruleForm')">重置</el-button>
+            </el-form-item>
+        </el-form>
     </div>
 </template>
 
@@ -46,7 +46,7 @@
             return {
                 ruleForm: {
                     title: '',
-                    phone:'',
+                    phone: '',
                     Identity: '',
                     date1: '',
                     date2: '',
@@ -73,7 +73,13 @@
                     desc: [
                         {required: true, message: '请填写活动形式', trigger: 'blur'}
                     ]
-                }
+                },
+                pickerOptions: {
+                    disabledDate(time) {
+                        return time.getTime() < Date.now();
+                    }
+                },
+
             };
         },
         methods: {
@@ -85,23 +91,23 @@
                         let currentUser = this.$AV.User.current();
                         blogs.save({
                             title: this.ruleForm.title,
-                            phone:this.ruleForm.phone,
+                            phone: this.ruleForm.phone,
                             Identity: this.ruleForm.Identity,
                             date1: this.ruleForm.date1,
                             date2: this.ruleForm.date2,
                             desc: this.ruleForm.desc,
-                            user:currentUser,
-                            userId:currentUser.toJSON().objectId,
-                        }).then(()=>{
+                            user: currentUser,
+                            userId: currentUser.toJSON().objectId,
+                        }).then(() => {
                             this.$notify({
-                                title:'成功',
-                                message:'发帖成功 ヾ(๑╹◡╹)ﾉ"',
-                                type:'success',
+                                title: '成功',
+                                message: '发帖成功 ヾ(๑╹◡╹)ﾉ"',
+                                type: 'success',
                                 offset: 100
                             });
                             this.$router.push({
-                                name:'Index',
-                                page:1
+                                name: 'Index',
+                                page: 1
                             });
                         })
                     } else {
@@ -117,7 +123,7 @@
 </script>
 
 <style scoped>
-    .el-col-2{
+    .el-col-2 {
         text-align: center;
     }
 </style>

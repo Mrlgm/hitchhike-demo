@@ -71,7 +71,8 @@
             padding: 10px;
             margin: 10px;
             width: 600px;
-            transition: all 1s;
+            transition: all .5s;
+            border-radius: 4px;
             figure {
                 img {
                     margin: 10px;
