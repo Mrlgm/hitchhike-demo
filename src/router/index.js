@@ -49,7 +49,7 @@ const router = new Router({
             }
         },
         {
-            path: '/detail',
+            path: '/detail/:blogId',
             name: 'Detail',
             component: Detail
         },

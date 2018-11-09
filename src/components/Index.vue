@@ -1,18 +1,21 @@
 <template>
     <div class="index">
+
         <section v-for="blog in blogList">
             <figure>
                 <img :src="blog.attributes.user.attributes.avatar" title="" alt="头像" width="60" height="60">
                 <figcaption>{{blog.attributes.user.attributes.username}}</figcaption>
             </figure>
-            <div class="desc">
-                <div class="title">
-                    <h2> {{blog.attributes.title}} </h2>
-                    <span class="identity">{{blog.attributes.Identity | formatIdentity}}</span>
-                    <span class="time">{{blog.attributes.date1 | getTime}}去</span>
+            <router-link :to="{name:'Detail',params:{blogId:blog.id}}">
+                <div class="desc">
+                    <div class="title">
+                        <h2> {{blog.attributes.title}} </h2>
+                        <span class="identity">{{blog.attributes.Identity | formatIdentity}}</span>
+                        <span class="time">{{blog.attributes.date1 | getTime}}去</span>
+                    </div>
+                    <p>{{blog.attributes.desc}}</p>
                 </div>
-                <p>{{blog.attributes.desc}}</p>
-            </div>
+            </router-link>
         </section>
     </div>
 </template>
@@ -26,9 +29,10 @@
                 total: 0
             }
         },
-        created() {},
+        created() {
+        },
         mounted() {
-            this.getBlog();
+            this.getBlog()
         },
         methods: {
             getBlog(page) {
@@ -44,7 +48,7 @@
                 })
                 this.blogList = list
             },
-            getDriver(){
+            getDriver() {
                 let query = new this.$AV.Query('Blogs');
                 query.include('user');
                 query.descending('createdAt');//从最新的开始返回
@@ -61,7 +65,7 @@
 <style lang="scss" scoped>
     .index {
         padding: 10px;
-        > section {
+        section {
             display: flex;
             background-color: #fff;
             padding: 10px;
@@ -76,10 +80,11 @@
                     text-align: center;
                 }
             }
+
             .desc {
                 .title {
                     display: flex;
-                    h2{
+                    h2 {
                         display: flex;
                         align-items: center;
                     }
