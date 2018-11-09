@@ -26,9 +26,7 @@
                 total: 0
             }
         },
-        created() {
-
-        },
+        created() {},
         mounted() {
             this.getBlog();
         },
