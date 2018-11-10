@@ -17,6 +17,15 @@
                 </div>
             </router-link>
         </section>
+        <div class="pag">
+            <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="total"
+                    :current-page="page"
+                    @current-change="changePage">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
@@ -26,27 +35,43 @@
         data() {
             return {
                 blogList: [],
-                total: 0
+                total: 0,
+                page:1
             }
         },
         created() {
         },
         mounted() {
-            this.getBlog()
+            this.page = this.$route.query.page-0 || 1;
+            this.getTotal();
+            this.blogList=this.getBlog(this.page);
         },
         methods: {
+            getTotal(){
+                let query = new this.$AV.Query('Blogs');
+                query.count().then(count => {
+                    this.total = count;
+                });
+            },
             getBlog(page) {
-                //this.page = page;
+                this.page = page;
                 let list = []
                 let query = new this.$AV.Query('Blogs');
                 query.include('user');
                 query.descending('createdAt');//从最新的开始返回
+                query.limit(6);// 每页 6 条结果
+                query.skip((page-1)*6);
                 query.find().then((blogs) => {
                     blogs.forEach((blog, index) => {
                         list.push({...blog});
                     });
                 })
-                this.blogList = list
+                return list
+            },
+            changePage(newPage){
+                //this.getBlog(newPage);
+                //this.$router.push({name:'Index',query:{page:newPage}});
+                this.blogList = this.getBlog(newPage)
             },
             getDriver() {
                 let query = new this.$AV.Query('Blogs');

@@ -4,7 +4,13 @@
             <img :src="user.avatar" alt="头像">
             <div class="name">
                 <h3>{{blog.title}}</h3>
-                <p><span>{{user.username}}</span>发表于{{blog.createdAt | formatDate}}</p>
+                <div>
+                    <router-link :to="{name:'user',params:{userId:user.objectId}}">
+                        <span>{{user.username}}</span>
+                    </router-link>
+
+                    <span>发表于{{blog.createdAt | formatDate}}</span>
+                </div>
             </div>
         </div>
         <div class="table">
@@ -47,7 +53,7 @@
         },
         beforeMount() {
             this.getBlogDetail();
-            console.log(this.blog)
+
         },
         watch: {
             '$route'(to, from) {
@@ -59,14 +65,13 @@
                 let query = new this.$AV.Query('Blogs');
                 query.include('user');
                 query.get(this.$route.params.blogId).then(res => {
-                    console.log(res)
                     let data = res.toJSON();
-                    console.log(data)
                     this.blog = data;
                     this.tableData[0].date = this.getDay(data.date1) + this.getTime(data.date2)
                     this.tableData[0].phone = data.phone
                     this.tableData[0].address = data.desc
                     this.user = data.user;
+                    console.log(this.user)
                 });
             },
             getTime(time) {
