@@ -33,7 +33,8 @@
 
 <script>
     export default {
-        name: "My"
+        name: "My",
+
     }
 </script>
 

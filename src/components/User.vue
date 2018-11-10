@@ -13,10 +13,13 @@
                 <p>{{blog.updatedAt | month}}月</p>
                 <p>{{blog.updatedAt | year}}年</p>
             </div>
-            <div>
-                <h2>{{blog.title}}</h2>
-                <div>{{blog.desc}}</div>
-            </div>
+            <router-link class="link" :to="{name:'Detail',params:{blogId:blog.id}}">
+                <div>
+                    <h2>{{blog.title}}</h2>
+                    <div>{{blog.desc}}</div>
+                </div>
+            </router-link>
+
         </div>
         <div class="pag">
             <el-pagination
@@ -115,6 +118,9 @@
                     color: #999;
                 }
                 margin-right: 10px;
+            }
+            .link{
+                flex-grow: 1;
             }
         }
         .pag {
