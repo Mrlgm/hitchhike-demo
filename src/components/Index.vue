@@ -1,19 +1,22 @@
 <template>
     <div class="index">
-
+        <div class="btn">
+            <el-button @click="getIdentity('driver')">我是乘客</el-button>
+            <el-button @click="getIdentity('passenger')">我是司机</el-button>
+        </div>
         <section v-for="blog in blogList">
             <figure>
-                <img :src="blog.attributes.user.attributes.avatar" title="" alt="头像" width="60" height="60">
-                <figcaption>{{blog.attributes.user.attributes.username}}</figcaption>
+                <img :src="blog.avatar" title="" alt="头像" width="60" height="60">
+                <figcaption>{{blog.username}}</figcaption>
             </figure>
             <router-link :to="{name:'Detail',params:{blogId:blog.id}}">
                 <div class="desc">
                     <div class="title">
-                        <h2> {{blog.attributes.title}} </h2>
-                        <span class="identity">{{blog.attributes.Identity | formatIdentity}}</span>
-                        <span class="time">{{blog.attributes.date1 | getTime}}去</span>
+                        <h2> {{blog.title}} </h2>
+                        <span class="identity">{{blog.identity | formatIdentity}}</span>
+                        <span class="time">{{blog.date | getTime}}去</span>
                     </div>
-                    <p>{{blog.attributes.desc}}</p>
+                    <p>{{blog.start}} -- {{blog.end}}</p>
                 </div>
             </router-link>
         </section>
@@ -36,52 +39,78 @@
             return {
                 blogList: [],
                 total: 0,
-                page:1
+                page: 1
             }
         },
         created() {
         },
         mounted() {
-            this.page = this.$route.query.page-0 || 1;
-            this.getTotal();
-            this.blogList=this.getBlog(this.page);
+            this.page = this.$route.query.page - 0 || 1;
+            this.blogList = this.getBlog(this.page);
         },
         methods: {
-            getTotal(){
-                let query = new this.$AV.Query('Blogs');
-                query.count().then(count => {
-                    this.total = count;
-                });
-            },
+
             getBlog(page) {
                 this.page = page;
                 let list = []
                 let query = new this.$AV.Query('Blogs');
+                query.count().then(count => {
+                    this.total = count;
+                });
                 query.include('user');
                 query.descending('createdAt');//从最新的开始返回
                 query.limit(6);// 每页 6 条结果
-                query.skip((page-1)*6);
+                query.skip((page - 1) * 6);
                 query.find().then((blogs) => {
                     blogs.forEach((blog, index) => {
-                        list.push({...blog});
+                        console.log(blog)
+                        list.push({
+                            avatar: blog.attributes.user.attributes.avatar,
+                            username: blog.attributes.user.attributes.username,
+                            id: blog.id,
+                            title: blog.attributes.title,
+                            identity: blog.attributes.Identity,
+                            date: blog.attributes.date1,
+                            start: blog.attributes.start,
+                            end: blog.attributes.end,
+                            desc: blog.attributes.desc
+                        });
                     });
                 })
                 return list
             },
-            changePage(newPage){
+            changePage(newPage) {
                 //this.getBlog(newPage);
                 //this.$router.push({name:'Index',query:{page:newPage}});
                 this.blogList = this.getBlog(newPage)
             },
-            getDriver() {
+            getIdentity(val) {
                 let query = new this.$AV.Query('Blogs');
                 query.include('user');
                 query.descending('createdAt');//从最新的开始返回
-                query.find().then((blogs) => {
+                query.equalTo('Identity', val);
+                query.count().then(count => {
+                    this.total = count;
+                });
+                let list = []
+                query.find().then(function (blogs) {
                     blogs.forEach((blog, index) => {
-                        this.blogList.push({...blog});
+                        console.log(blog)
+                        list.push({
+                            avatar: blog.attributes.user.attributes.avatar,
+                            username: blog.attributes.user.attributes.username,
+                            id: blog.id,
+                            title: blog.attributes.title,
+                            identity: blog.attributes.Identity,
+                            date: blog.attributes.date1,
+                            start: blog.attributes.start,
+                            end: blog.attributes.end,
+                            desc: blog.attributes.desc
+                        });
                     });
-                })
+                }, function (error) {
+                });
+                this.blogList = list
             }
         }
     }
@@ -90,6 +119,12 @@
 <style lang="scss" scoped>
     .index {
         padding: 10px;
+        .btn {
+            background-color: #fff;
+            text-align: center;
+            padding: 10px;
+
+        }
         section {
             display: flex;
             background-color: #fff;

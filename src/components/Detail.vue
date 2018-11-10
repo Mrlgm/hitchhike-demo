@@ -20,7 +20,7 @@
                     style="width: 100%">
                 <el-table-column
                         prop="date"
-                        label="日期"
+                        label="发车时间段"
                         width="180">
                 </el-table-column>
                 <el-table-column
@@ -29,10 +29,17 @@
                         width="180">
                 </el-table-column>
                 <el-table-column
-                        prop="address"
-                        label="起止地址">
+                        prop="start"
+                        label="出发">
+                </el-table-column>
+                <el-table-column
+                        prop="end"
+                        label="到达">
                 </el-table-column>
             </el-table>
+        </div>
+        <div class="desc">
+            备注：{{desc}}
         </div>
     </div>
 </template>
@@ -44,10 +51,12 @@
             return {
                 blog: '',
                 user: '',
+                desc: '',
                 tableData: [{
                     date: '',
                     phone: '',
-                    address: ''
+                    start: '',
+                    end: ''
                 }]
             }
         },
@@ -67,9 +76,11 @@
                 query.get(this.$route.params.blogId).then(res => {
                     let data = res.toJSON();
                     this.blog = data;
-                    this.tableData[0].date = this.getDay(data.date1) + this.getTime(data.date2)
+                    this.tableData[0].date = this.getDay(data.date1) + this.getTime(data.date2) + '--' + this.getTime(data.date3)
                     this.tableData[0].phone = data.phone
-                    this.tableData[0].address = data.desc
+                    this.tableData[0].start = data.start
+                    this.tableData[0].end = data.end
+                    this.desc = data.desc
                     this.user = data.user;
                     console.log(this.user)
                 });
@@ -82,7 +93,7 @@
 
                 let hour = date.getHours();  // 获取小时数(0-23)
                 let min = date.getMinutes();
-                return ' ' + hour + ':' + min
+                return hour + ':' + min
             },
             getDay(time) {
                 let date = new Date(time)
@@ -99,7 +110,7 @@
 <style lang="scss" scoped>
     .detail {
         height: 100%;
-        min-width: 600px;
+        min-width: 700px;
 
         .user {
             display: flex;
@@ -113,9 +124,16 @@
                 justify-content: center;
             }
         }
-        .table{
+        .table {
             border-bottom-right-radius: 4px;
             border-bottom-left-radius: 4px;
+        }
+        .desc {
+            background-color: #fff;
+            padding: 10px;
+            font-size: 14px;
+            color: #999;
+            height: 100px;
         }
     }
 
