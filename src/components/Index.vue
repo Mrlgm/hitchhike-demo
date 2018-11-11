@@ -177,5 +177,8 @@
             }
         }
         height: 100%;
+        .pag{
+            text-align: center;
+        }
     }
 </style>
