@@ -1,7 +1,7 @@
 <template>
     <div class="register">
         <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px"
-                 class="demo-ruleForm" label-position="top">
+                 class="demo-ruleForm">
             <el-form-item label="用户名" prop="name">
                 <el-input v-model.number="ruleForm2.name"></el-input>
             </el-form-item>
@@ -11,7 +11,27 @@
             <el-form-item label="确认密码" prop="checkPass">
                 <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
             </el-form-item>
-
+            <el-form-item label="专业" prop="profession">
+                <el-input v-model="ruleForm2.profession"></el-input>
+            </el-form-item>
+            <el-form-item label="年级" prop="grade">
+                <el-input v-model="ruleForm2.grade"></el-input>
+            </el-form-item>
+            <el-form-item label="性别" prop="gender">
+                <el-select v-model="ruleForm2.gender" placeholder="请选择性别">
+                    <el-option label="男" value="man"></el-option>
+                    <el-option label="女" value="woman"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="联系方式" prop="phoneNumber">
+                <el-input v-model="ruleForm2.phoneNumber"></el-input>
+            </el-form-item>
+            <el-form-item label="QQ" prop="qq">
+                <el-input v-model="ruleForm2.qq"></el-input>
+            </el-form-item>
+            <el-form-item label="个性签名">
+                <el-input type="textarea" v-model="ruleForm2.signature"></el-input>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
                 <el-button @click="resetForm('ruleForm2')">重置</el-button>
@@ -22,6 +42,7 @@
 
 <script>
     import {mapActions} from 'vuex';
+
     const reg = /^\d+/;
     export default {
         name: "Register",
@@ -61,7 +82,13 @@
                 ruleForm2: {
                     name: '',
                     pass: '',
-                    checkPass: ''
+                    checkPass: '',
+                    gender: '',
+                    profession: '',
+                    grade: '',
+                    phoneNumber: '',
+                    qq: '',
+                    signature: ''
                 },
                 rules2: {
                     name: [
@@ -81,7 +108,16 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.register({username: this.ruleForm2.name, password: this.ruleForm2.pass})
+                        this.register({
+                            username: this.ruleForm2.name,
+                            password: this.ruleForm2.pass,
+                            gender: this.ruleForm2.gender,
+                            profession: this.ruleForm2.profession,
+                            grade: this.ruleForm2.grade,
+                            phoneNumber: this.ruleForm2.phoneNumber,
+                            qq: this.ruleForm2.qq,
+                            signature: this.ruleForm2.signature
+                        })
                             .then(res => {
                                 this.$notify({
                                     type: 'success',

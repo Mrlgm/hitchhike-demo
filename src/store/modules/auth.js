@@ -24,11 +24,17 @@ const actions = {
             commit('setIsLogin', true);
         });
     },
-    register({commit, state}, {username, password}) {
+    register({commit, state}, {username, password, gender='', profession='', grade='', phoneNumber='', qq='', signature=''}) {
         let user = new this.$AV.User();
         user.setUsername(username);
         user.setPassword(password);
         user.set('avatar', require(`../../assets/user_imgs/${Math.floor(Math.random() * 14)}.png`));
+        user.set('gender', gender);
+        user.set('profession', profession);
+        user.set('grade', grade);
+        user.set('phoneNumber', phoneNumber);
+        user.set('qq', qq);
+        user.set('signature', signature);
         return user.signUp().then(res => {
             commit('setUserInfo', res.toJSON());
             commit('setIsLogin', true);

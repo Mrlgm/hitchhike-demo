@@ -95,7 +95,6 @@
                 let list = []
                 query.find().then(function (blogs) {
                     blogs.forEach((blog, index) => {
-                        console.log(blog)
                         list.push({
                             avatar: blog.attributes.user.attributes.avatar,
                             username: blog.attributes.user.attributes.username,

@@ -1,8 +1,19 @@
 <template>
     <div class="my">
         <div class="user">
-            <img :src="user.avatar" alt="">
-            <div class="name">{{user.username}} 的帖子</div>
+            <div class="avatar">
+                <img :src="user.avatar" alt="">
+                <div class="name">{{user.username}} 的帖子</div>
+            </div>
+            <ul>
+                <li><span>专业：</span><span>{{user.profession}}</span></li>
+                <li><span>年级：</span><span>{{user.grade}}</span></li>
+                <li><span>性别：</span><span>{{user.gender}}</span></li>
+                <li><span>联系方式：</span><span>{{user.phoneNumber}}</span></li>
+                <li><span>QQ：</span><span>{{user.qq}}</span></li>
+                <li><span>个性签名：</span><span>{{user.signature}}</span></li>
+            </ul>
+            <div class="time"><span>此账号创建于：</span><span>{{user.createdAt | formatDate}}</span></div>
         </div>
         <div class="decs" v-for="blog in blogList">
             <div class="content">
@@ -17,7 +28,9 @@
                 </div>
             </div>
             <div>
-                <el-button type="primary" icon="el-icon-edit"  @click="$router.push({name:'Edit',params:{blogId:blog.id}})">编辑</el-button>
+                <el-button type="primary" icon="el-icon-edit"
+                           @click="$router.push({name:'Edit',params:{blogId:blog.id}})">编辑
+                </el-button>
                 <el-button type="danger" icon="el-icon-delete" @click="deleteBlog(blog.id)">删除</el-button>
             </div>
         </div>
@@ -39,7 +52,8 @@
             return {
                 blogList: [],
                 page: 1,
-                total: 0
+                total: 0,
+
             }
         },
         computed: {
@@ -48,7 +62,6 @@
         created() {
             this.page = this.$route.query.page - 0 || 1;
             this.blogList = this.getUserBlog(this.page);
-            console.log(this.blogList)
         },
         methods: {
             getUserBlog(page) {
@@ -62,7 +75,6 @@
                 query.skip((page - 1) * 10);
                 let list = [];
                 query.find().then(blogs => {
-
                     blogs.forEach((blog, index) => {
                         list.push({
                             id: blog.id,
@@ -111,16 +123,35 @@
         height: 100%;
         width: 600px;
         .user {
-            display: flex;
+            padding: 10px;
             background-color: #fff;
-            img {
-                padding: 10px;
-            }
-            .name {
+            .avatar {
                 display: flex;
-                justify-content: center;
-                align-items: center;
+                img {
+                    padding-right: 10px;
+                }
+                .name {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
             }
+            ul {
+                margin-top: 10px;
+                list-style-type: none;
+                li {
+                    font-size: 14px;
+                    line-height: 1.4;
+                    height: 28px;
+                }
+            }
+            .time{
+                font-size: 14px;
+                line-height: 28px;
+                color: #999;
+                padding-bottom: 10px;
+            }
+
         }
         .decs {
 

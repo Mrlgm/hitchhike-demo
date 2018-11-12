@@ -20,13 +20,6 @@ Vue.prototype.$AV = AV
 
 Vue.config.productionTip = false
 
-new Vue({
-    render: h => h(App),
-    router,
-    store
-
-}).$mount('#app')
-
 Vue.filter('formatDate', function (val) {
     let createDate = new Date(val);
     let now = Date.now();
@@ -41,6 +34,15 @@ Vue.filter('formatDate', function (val) {
         return parseInt(time / 86400) + '天前';
     }
 })
+
+new Vue({
+    render: h => h(App),
+    router,
+    store
+
+}).$mount('#app')
+
+
 
 Vue.filter('day',function (val) {
     return new Date(val).getDate();
