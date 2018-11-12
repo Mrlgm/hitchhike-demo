@@ -59,7 +59,6 @@
                 query.limit(10); // 每页返回 10 条结果
                 query.skip((page - 1) * 10);
                 query.find().then(blogs => {
-                    console.log(blogs)
                     this.blogList=[]
                     blogs.forEach((blog, index) => {
                         this.blogList.push({

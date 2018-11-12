@@ -163,7 +163,6 @@
 
 <style scoped>
     .create {
-        width: 600px;
     }
 
     .line {

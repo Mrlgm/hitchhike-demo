@@ -63,7 +63,6 @@
                 query.skip((page - 1) * 6);
                 query.find().then((blogs) => {
                     blogs.forEach((blog, index) => {
-                        console.log(blog)
                         list.push({
                             avatar: blog.attributes.user.attributes.avatar,
                             username: blog.attributes.user.attributes.username,

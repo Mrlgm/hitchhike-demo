@@ -82,7 +82,6 @@
                     this.tableData[0].end = data.end
                     this.desc = data.desc
                     this.user = data.user;
-                    console.log(this.user)
                 });
             },
             getTime(time) {
