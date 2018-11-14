@@ -34,6 +34,12 @@ Vue.filter('formatDate', function (val) {
         return parseInt(time / 86400) + '天前';
     }
 })
+Vue.filter('getTime',function (val) {
+    let year = new Date(val).getFullYear();
+    let month = new Date(val).getMonth()+1;
+    let day = new Date(val).getDate();
+    return year+'年'+month+'月'+day+'日'
+})
 
 new Vue({
     render: h => h(App),
@@ -56,12 +62,7 @@ Vue.filter('year',function (val) {
     return new Date(val).getFullYear();
 })
 
-Vue.filter('getTime',function (val) {
-    let year = new Date(val).getFullYear();
-    let month = new Date(val).getMonth()+1;
-    let day = new Date(val).getDate();
-    return year+'年'+month+'月'+day+'日'
-})
+
 
 Vue.filter('formatIdentity',function (val) {
     if (val === 'driver'){

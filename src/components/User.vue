@@ -7,6 +7,16 @@
                 <span>此账号创建于{{user.createdAt|getTime}}</span>
             </div>
         </div>
+        <div class="information">
+            <ul>
+                <li><span>专业：</span><span>{{user.profession}}</span></li>
+                <li><span>年级：</span><span>{{user.grade}}</span></li>
+                <li><span>性别：</span><span>{{user.gender}}</span></li>
+                <li><span>联系方式：</span><span>{{user.phoneNumber}}</span></li>
+                <li><span>QQ：</span><span>{{user.qq}}</span></li>
+                <li><span>个性签名：</span><span>{{user.signature}}</span></li>
+            </ul>
+        </div>
         <div class="decs" v-for="blog in blogList">
             <div class="date">
                 <p>{{blog.updatedAt | day}}日</p>
@@ -38,12 +48,12 @@
         data() {
             return {
                 blogList: [],
-                user: null,
+                user: {},
                 page: 1,
                 total: 0
             }
         },
-        mounted() {
+        created() {
             this.page = this.$route.query.page-0 || 1;
             this.getUserBlog(this.page);
         },
@@ -74,6 +84,12 @@
                         username: blogs[0].attributes.user.attributes.username,
                         avatar: blogs[0].attributes.user.attributes.avatar,
                         createdAt:blogs[0].attributes.user.createdAt,
+                        gender:blogs[0].attributes.user.attributes.gender,
+                        grade:blogs[0].attributes.user.attributes.grade,
+                        phoneNumber:blogs[0].attributes.user.attributes.phoneNumber,
+                        profession:blogs[0].attributes.user.attributes.profession,
+                        qq:blogs[0].attributes.user.attributes.qq,
+                        signature:blogs[0].attributes.user.attributes.signature,
                     };
                     this.$router.push({
                         name: 'user',
@@ -104,6 +120,14 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+            }
+        }
+        .information{
+            padding: 10px;
+            background-color: #fff;
+            ul{
+                list-style: none;
+                
             }
         }
         .decs {

@@ -76,7 +76,7 @@
                 query.get(this.$route.params.blogId).then(res => {
                     let data = res.toJSON();
                     this.blog = data;
-                    this.tableData[0].date = this.getDay(data.date1) + this.getTime(data.date2) + '--' + this.getTime(data.date3)
+                    this.tableData[0].date = this.getDay(data.date1) + this.getTime(data.date2) + '-' + this.getTime(data.date3)
                     this.tableData[0].phone = data.phone
                     this.tableData[0].start = data.start
                     this.tableData[0].end = data.end
@@ -99,7 +99,7 @@
                 let year = date.getFullYear();  // 获取完整的年份(4位,1970)
                 let month = date.getMonth() + 1;  // 获取月份(0-11,0代表1月,用的时候记得加上1)
                 let day = date.getDate();  // 获取日(1-31)
-                return year + '-' + month + '-' + day
+                return year + '年' + month + '月' + day + '日'
             }
         }
 

@@ -141,8 +141,12 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .register {
-        min-width: 500px;
+        margin-top: 60px;
+        height: 100%;
+        .demo-ruleForm{
+            width: 500px;
+        }
     }
 </style>

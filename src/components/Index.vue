@@ -1,38 +1,45 @@
 <template>
     <div class="index">
-        <div class="btn">
-            <el-button @click="getIdentity('driver')">我是乘客</el-button>
-            <el-button @click="getIdentity('passenger')">我是司机</el-button>
+        <div class="curtain" v-if="!isLogin">
+            请先注册或登陆
         </div>
-        <section v-for="blog in blogList">
-            <figure>
-                <img :src="blog.avatar" title="" alt="头像" width="60" height="60">
-                <figcaption>{{blog.username}}</figcaption>
-            </figure>
-            <router-link :to="{name:'Detail',params:{blogId:blog.id}}">
-                <div class="desc">
-                    <div class="title">
-                        <h2> {{blog.title}} </h2>
-                        <span class="identity">{{blog.identity | formatIdentity}}</span>
-                        <span class="time">{{blog.date | getTime}}去</span>
+        <div  v-if="isLogin">
+            <div class="btn">
+                <el-button @click="getIdentity('driver')">我是乘客</el-button>
+                <el-button @click="getIdentity('passenger')">我是司机</el-button>
+            </div>
+            <section v-for="blog in blogList">
+                <figure>
+                    <img :src="blog.avatar" title="" alt="头像" width="60" height="60">
+                    <figcaption>{{blog.username}}</figcaption>
+                </figure>
+                <router-link :to="{name:'Detail',params:{blogId:blog.id}}">
+                    <div class="desc">
+                        <div class="title">
+                            <h2> {{blog.title}} </h2>
+                            <span class="identity">{{blog.identity | formatIdentity}}</span>
+                            <span class="time">{{blog.date | getTime}}去</span>
+                        </div>
+                        <p>{{blog.start}} -- {{blog.end}}</p>
                     </div>
-                    <p>{{blog.start}} -- {{blog.end}}</p>
-                </div>
-            </router-link>
-        </section>
-        <div class="pag">
-            <el-pagination
-                    background
-                    layout="prev, pager, next"
-                    :total="total"
-                    :current-page="page"
-                    @current-change="changePage">
-            </el-pagination>
+                </router-link>
+            </section>
+            <div class="pag">
+                <el-pagination
+                        background
+                        layout="prev, pager, next"
+                        :total="total"
+                        :current-page="page"
+                        @current-change="changePage">
+                </el-pagination>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import {mapGetters, mapActions} from 'vuex'
+
     export default {
         name: "index",
         data() {
@@ -42,14 +49,18 @@
                 page: 1
             }
         },
+        computed:{
+            ...mapGetters(['isLogin', 'user'])
+        },
         created() {
+            this.checkLogin()
         },
         mounted() {
             this.page = this.$route.query.page - 0 || 1;
             this.blogList = this.getBlog(this.page);
         },
         methods: {
-
+            ...mapActions(['checkLogin', 'logout']),
             getBlog(page) {
                 this.page = page;
                 let list = []
@@ -117,6 +128,14 @@
 <style lang="scss" scoped>
     .index {
         padding: 10px;
+        .curtain{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
         .btn {
             background-color: #fff;
             text-align: center;

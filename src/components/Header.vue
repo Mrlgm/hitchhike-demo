@@ -12,7 +12,7 @@
                     {{user.username}}
                 </template>
                 <el-menu-item index="/my?page=1">我的帖子</el-menu-item>
-                <el-menu-item index="1" @click="logout">注销</el-menu-item>
+                <el-menu-item index="1" @click="isLogout">注销</el-menu-item>
             </el-submenu>
             <img class="img right" v-if="isLogin" :src="user.avatar" alt="">
         </el-menu>
@@ -33,7 +33,14 @@
             this.checkLogin()
         },
         methods: {
-            ...mapActions(['checkLogin', 'logout'])
+            ...mapActions(['checkLogin', 'logout']),
+            isLogout(){
+                this.logout()
+                this.$router.push({
+                    name: 'Index',
+                    page: 1
+                });
+            }
         }
 
     }
