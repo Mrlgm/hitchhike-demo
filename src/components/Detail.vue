@@ -113,7 +113,7 @@
 
         .user {
             display: flex;
-            background-color: #fff;
+            background: hsla(0, 0%, 100%, .7);
             > img {
                 margin: 10px;
             }
@@ -126,9 +126,10 @@
         .table {
             border-bottom-right-radius: 4px;
             border-bottom-left-radius: 4px;
+
         }
         .desc {
-            background-color: #fff;
+            background: hsla(0, 0%, 100%, .7);
             padding: 10px;
             font-size: 14px;
             color: #999;

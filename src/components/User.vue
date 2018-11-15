@@ -112,7 +112,7 @@
         width: 600px;
         .msg {
             display: flex;
-            background-color: #fff;
+            background: hsla(0, 0%, 100%, .7);
             img {
                 padding: 10px;
             }
@@ -124,7 +124,7 @@
         }
         .information{
             padding: 10px;
-            background-color: #fff;
+            background: hsla(0, 0%, 100%, .7);
             ul{
                 list-style: none;
                 
@@ -132,7 +132,7 @@
         }
         .decs {
             display: flex;
-            background-color: #fff;
+            background: hsla(0, 0%, 100%, .7);
             margin-top: 10px;
             padding: 10px;
             .date {
@@ -148,7 +148,7 @@
         }
         .pag {
             border-top: 1px solid #ddd;
-            background-color: #fff;
+            background: hsla(0, 0%, 100%, .7);
             text-align: center;
         }
     }

@@ -144,7 +144,7 @@
 <style lang="scss" scoped>
     .register {
         height: 100%;
-        padding: 10px;
+        padding:15px 15px 0 0;
         background: hsla(0, 0%, 100%, .7);
         border-radius: 4px;
         .demo-ruleForm{

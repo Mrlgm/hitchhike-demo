@@ -156,14 +156,13 @@
             }
         }
         .btn {
-            background-color: #fff;
             text-align: center;
             padding: 10px;
 
         }
         section {
             display: flex;
-            background-color: #fff;
+            background: hsla(0, 0%, 100%, .7);
             padding: 10px;
             margin: 10px;
             width: 600px;

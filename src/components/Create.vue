@@ -164,6 +164,9 @@
 
 <style scoped>
     .create {
+        padding:15px 15px 15px 0;
+        border-radius: 4px;
+        background: hsla(0, 0%, 100%, .7);
     }
 
     .line {

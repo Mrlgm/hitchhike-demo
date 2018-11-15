@@ -124,7 +124,7 @@
         width: 600px;
         .user {
             padding: 10px;
-            background-color: #fff;
+            background: hsla(0, 0%, 100%, .7);
             .avatar {
                 display: flex;
                 img {
@@ -155,7 +155,7 @@
         }
         .decs {
 
-            background-color: #fff;
+            background: hsla(0, 0%, 100%, .7);
             margin-top: 10px;
             padding: 10px;
             .content {
@@ -172,7 +172,7 @@
         }
         .pag {
             border-top: 1px solid #ddd;
-            background-color: #fff;
+            background: hsla(0, 0%, 100%, .7);
             text-align: center;
         }
     }
