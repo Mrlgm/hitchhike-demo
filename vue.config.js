@@ -1,3 +1,3 @@
 module.exports = {
-     //baseUrl: '/hitchhike-demo/dist/',
+     baseUrl: '/hitchhike-demo/dist/',
 }
