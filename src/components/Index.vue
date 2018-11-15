@@ -115,7 +115,6 @@
                 query.limit(6);// 每页 6 条结果
                 query.skip((page - 1) * 6);
                 query.count().then(count => {
-                    console.log(count)
                     this.total = count;
                 });
                 let list = []

@@ -169,7 +169,9 @@
 
 <style lang="scss" scoped>
     .edit {
-        width: 650px;
+        padding:15px 15px 15px 0;
+        border-radius: 4px;
+        background: hsla(0, 0%, 100%, .7);
     }
 
     .line {
