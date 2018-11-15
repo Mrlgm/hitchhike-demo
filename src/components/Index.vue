@@ -34,6 +34,7 @@
                         layout="prev, pager, next"
                         :total="total"
                         :current-page="page"
+                        :page-size="6"
                         @current-change="changePage">
                 </el-pagination>
             </div>
@@ -50,7 +51,8 @@
             return {
                 blogList: [],
                 total: 0,
-                page: 1
+                page: 1,
+                idString:''
             }
         },
         computed: {
@@ -70,6 +72,7 @@
                 let list = []
                 let query = new this.$AV.Query('Blogs');
                 query.count().then(count => {
+                    console.log(count)
                     this.total = count;
                 });
                 query.include('user');
