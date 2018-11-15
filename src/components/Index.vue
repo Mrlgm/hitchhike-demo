@@ -52,11 +52,12 @@
                 blogList: [],
                 total: 0,
                 page: 1,
-                idString:''
+                idString: ''
             }
         },
         computed: {
-            ...mapGetters(['isLogin', 'user'])
+            ...mapGetters(['isLogin', 'user']),
+
         },
         created() {
             this.checkLogin()
@@ -72,7 +73,6 @@
                 let list = []
                 let query = new this.$AV.Query('Blogs');
                 query.count().then(count => {
-                    console.log(count)
                     this.total = count;
                 });
                 query.include('user');
@@ -99,14 +99,23 @@
             changePage(newPage) {
                 //this.getBlog(newPage);
                 //this.$router.push({name:'Index',query:{page:newPage}});
-                this.blogList = this.getBlog(newPage)
+                if(this.idString){
+                    this.getIdentity(this.idString,newPage)
+                }else{
+                    this.blogList = this.getBlog(newPage)
+                }
+
             },
-            getIdentity(val) {
+            getIdentity(val,page) {
+                this.idString = val
                 let query = new this.$AV.Query('Blogs');
                 query.include('user');
                 query.descending('createdAt');//从最新的开始返回
                 query.equalTo('Identity', val);
+                query.limit(6);// 每页 6 条结果
+                query.skip((page - 1) * 6);
                 query.count().then(count => {
+                    console.log(count)
                     this.total = count;
                 });
                 let list = []
@@ -128,7 +137,7 @@
                 });
                 this.blogList = list
             },
-            toLogin(){
+            toLogin() {
                 this.$router.push({path: '/login'})
             }
         }
@@ -150,11 +159,11 @@
                 font-size: 8px;
                 line-height: 20px;
             }
-            h1{
+            h1 {
                 font-size: 40px;
                 margin: 10px 0;
             }
-            .curtain-btn{
+            .curtain-btn {
                 margin-top: 30px;
             }
         }
