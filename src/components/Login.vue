@@ -97,5 +97,9 @@
 <style lang="scss" scoped>
     .login {
         min-width: 500px;
+        padding: 10px;
+        background: hsla(0, 0%, 100%, .7);
+        border-radius: 4px;
+
     }
 </style>

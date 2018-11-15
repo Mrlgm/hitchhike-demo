@@ -21,7 +21,7 @@
                 <el-table-column
                         prop="date"
                         label="发车时间段"
-                        width="180">
+                        width="200">
                 </el-table-column>
                 <el-table-column
                         prop="phone"

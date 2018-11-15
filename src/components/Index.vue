@@ -1,9 +1,13 @@
 <template>
     <div class="index">
         <div class="curtain" v-if="!isLogin">
-            请先注册或登陆
+            <p>共享速度生活</p>
+            <h1>小居居电驴</h1>
+            <p>我们致力于为您提供校园内的电动车共享业务</p>
+            <p>同时，我们也欢迎您加入我们，一起为校园出行助力</p>
+            <el-button class="curtain-btn" @click="toLogin" type="warning">即刻开始</el-button>
         </div>
-        <div  v-if="isLogin">
+        <div v-if="isLogin">
             <div class="btn">
                 <el-button @click="getIdentity('driver')">我是乘客</el-button>
                 <el-button @click="getIdentity('passenger')">我是司机</el-button>
@@ -49,7 +53,7 @@
                 page: 1
             }
         },
-        computed:{
+        computed: {
             ...mapGetters(['isLogin', 'user'])
         },
         created() {
@@ -120,6 +124,9 @@
                 }, function (error) {
                 });
                 this.blogList = list
+            },
+            toLogin(){
+                this.$router.push({path: '/login'})
             }
         }
     }
@@ -128,13 +135,25 @@
 <style lang="scss" scoped>
     .index {
         padding: 10px;
-        .curtain{
+        .curtain {
             height: 100%;
             width: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-
+            color: #fff;
+            p {
+                font-size: 8px;
+                line-height: 20px;
+            }
+            h1{
+                font-size: 40px;
+                margin: 10px 0;
+            }
+            .curtain-btn{
+                margin-top: 30px;
+            }
         }
         .btn {
             background-color: #fff;
@@ -194,7 +213,7 @@
             }
         }
         height: 100%;
-        .pag{
+        .pag {
             text-align: center;
         }
     }

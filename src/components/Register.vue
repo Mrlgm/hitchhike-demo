@@ -143,8 +143,10 @@
 
 <style lang="scss" scoped>
     .register {
-        margin-top: 60px;
         height: 100%;
+        padding: 10px;
+        background: hsla(0, 0%, 100%, .7);
+        border-radius: 4px;
         .demo-ruleForm{
             width: 500px;
         }

@@ -140,9 +140,10 @@
                         }).then(() => {
                             this.$notify({
                                 title: '成功',
-                                message: '发帖成功 ヾ(๑╹◡╹)ﾉ"',
+                                message: '发帖成功 ヾ(๑╹◡╹)ﾉ"，若对方与您取得联系或改变行程请及时删帖',
                                 type: 'success',
-                                offset: 100
+                                offset: 100,
+                                duration:0
                             });
                             this.$router.push({
                                 name: 'Index',

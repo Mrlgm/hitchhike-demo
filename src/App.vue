@@ -31,7 +31,8 @@
         padding: 0;
         text-decoration: none;
     }
-    html,body{
+
+    html, body {
         height: 100%;
     }
 
@@ -48,7 +49,7 @@
         justify-content: center;
         align-items: center;
         height: 100%;
-        background-color: #EEEEEE;
         overflow: auto;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./assets/bg.jpeg") center no-repeat;
     }
 </style>
